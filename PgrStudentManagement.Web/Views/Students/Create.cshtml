@@ -1,0 +1,86 @@
+@model PgrStudentManagement.Web.Modules.Students.Models.Student
+
+@{
+    ViewData["Title"] = "Create Student";
+}
+
+<h1>Create Student</h1>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="StudentNumber"
+               class="form-label"></label>
+        <input asp-for="StudentNumber"
+               class="form-control" />
+        <span asp-validation-for="StudentNumber"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FirstName"
+               class="form-label"></label>
+        <input asp-for="FirstName"
+               class="form-control" />
+        <span asp-validation-for="FirstName"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="LastName"
+               class="form-label"></label>
+        <input asp-for="LastName"
+               class="form-control" />
+        <span asp-validation-for="LastName"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Course"
+               class="form-label"></label>
+        <input asp-for="Course"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ModeOfStudy"
+               class="form-label"></label>
+        <input asp-for="ModeOfStudy"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="StartDate"
+               class="form-label"></label>
+        <input asp-for="StartDate"
+               type="date"
+               class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Status"
+               class="form-label"></label>
+        <select asp-for="Status"
+                asp-items="Html.GetEnumSelectList<Status>()"
+                class="form-select"></select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ThesisTitle"
+               class="form-label"></label>
+        <input asp-for="ThesisTitle"
+               class="form-control" />
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Create
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Cancel
+    </a>
+</form>

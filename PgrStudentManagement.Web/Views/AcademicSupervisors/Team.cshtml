@@ -1,0 +1,169 @@
+@model PgrStudentManagement.Web.Modules.AcademicSupervisors.Models.SupervisoryTeamResult
+
+@{
+    ViewData["Title"] = "Student Supervisory Team";
+}
+
+<h1>Student Supervisory Team</h1>
+
+@if (!Model.StudentFound)
+{
+    <div class="alert alert-warning">
+        Student not found
+    </div>
+
+    <a asp-controller="Students"
+       asp-action="Index"
+       class="btn btn-secondary">
+        Return to Students
+    </a>
+}
+else
+{
+    <div class="card mb-4">
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-4">
+                    Student number
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Student!.StudentNumber
+                </dd>
+
+                <dt class="col-sm-4">
+                    Name
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Student.DisplayName
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <a asp-action="Assign"
+           asp-route-studentNumber="@Model.Student.StudentNumber"
+           class="btn btn-primary">
+            Assign Academic Supervisor
+        </a>
+    </div>
+
+    @if (Model.CurrentAssignments.Count == 0 &&
+         Model.HistoricalAssignments.Count == 0)
+    {
+        <div class="alert alert-info">
+            No supervisory assignments found
+        </div>
+    }
+    else
+    {
+        <h2>Current Assignments</h2>
+
+        @if (Model.CurrentAssignments.Count == 0)
+        {
+            <p class="text-muted">
+                No current supervisory assignments
+            </p>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Academic Supervisor</th>
+                        <th>Staff number</th>
+                        <th>Role</th>
+                        <th>Start date</th>
+                        <th>Employment type</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var assignment in
+                        Model.CurrentAssignments)
+                    {
+                        <tr>
+                            <td>
+                                @assignment.SupervisorName
+                            </td>
+                            <td>
+                                @assignment.SupervisorStaffNumber
+                            </td>
+                            <td>
+                                @assignment.Role
+                            </td>
+                            <td>
+                                @assignment.StartDate
+                                    .ToString("dd MMMM yyyy")
+                            </td>
+                            <td>
+                                @assignment.EmploymentType
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        <h2 class="mt-5">
+            Historical Assignments
+        </h2>
+
+        @if (Model.HistoricalAssignments.Count == 0)
+        {
+            <p class="text-muted">
+                No historical supervisory assignments
+            </p>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Academic Supervisor</th>
+                        <th>Staff number</th>
+                        <th>Role</th>
+                        <th>Start date</th>
+                        <th>End date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var assignment in
+                        Model.HistoricalAssignments)
+                    {
+                        <tr>
+                            <td>
+                                @assignment.SupervisorName
+                            </td>
+                            <td>
+                                @assignment.SupervisorStaffNumber
+                            </td>
+                            <td>
+                                @assignment.Role
+                            </td>
+                            <td>
+                                @assignment.StartDate
+                                    .ToString("dd MMMM yyyy")
+                            </td>
+                            <td>
+                                @(assignment.EndDate?
+                                    .ToString("dd MMMM yyyy")
+                                    ?? "Not recorded")
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+
+    <div class="mt-4">
+        <a asp-controller="Students"
+           asp-action="Details"
+           asp-route-studentNumber="@Model.Student.StudentNumber"
+           class="btn btn-secondary">
+            Return to Student Details
+        </a>
+    </div>
+}

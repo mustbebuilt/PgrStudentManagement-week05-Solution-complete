@@ -1,0 +1,92 @@
+@model IReadOnlyList<PgrStudentManagement.Web.Modules.Students.Models.Student>
+
+@{
+    ViewData["Title"] = "Students";
+}
+
+<h1>Students</h1>
+
+<p>
+    <a asp-action="Create"
+       class="btn btn-primary">
+        Create Student
+    </a>
+</p>
+
+@if (Model.Count == 0)
+{
+    <p class="alert alert-info">No students found</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Student number</th>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.StudentNumber</td>
+                <td>@student.FullName</td>
+                <td>@student.Course</td>
+                <td>@student.Status</td>
+                <td>
+                    <a asp-action="Details"
+                       asp-route-studentNumber="@student.StudentNumber">
+                        Details
+                    </a>
+                    |
+                    <a asp-action="Enrolments"
+                       asp-route-studentNumber="@student.StudentNumber">
+                        View enrolments
+                    </a>
+                    |
+                    <a asp-action="EnrolmentDetails"
+                       asp-route-studentNumber="@student.StudentNumber">
+                        Enrolment
+                    </a>
+                    |
+                    <a asp-action="ThesisDetails"
+                       asp-route-studentNumber="@student.StudentNumber">
+                        Thesis
+                    </a>
+                    |
+                    <a asp-action="EditStatus"
+                       asp-route-studentNumber="@student.StudentNumber">
+                        Edit status
+                    </a>
+                    |
+                    <a asp-action="EditExpectedSubmissionDate"
+                       asp-route-studentNumber="@student.StudentNumber">
+                        Edit expected date
+                    </a>
+                    |
+                    <a asp-action="RecordSubmission"
+                       asp-route-studentNumber="@student.StudentNumber">
+                        Record submission
+                    </a>
+                    |
+                    <a asp-controller="AcademicSupervisors"
+                        asp-action="Team"
+                        asp-route-studentNumber="@student.StudentNumber">
+                            Supervisory team
+                    </a>
+                    |
+                    <a asp-controller="ResearchActivity"
+                       asp-action="Index"
+                       asp-route-studentNumber="@student.StudentNumber">
+                        Research activities
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,53 @@
+@model PgrStudentManagement.Web.Modules.Students.Models.Student
+
+@{
+    ViewData["Title"] = "Thesis Details";
+}
+
+<h1>Thesis Details</h1>
+
+@if (ViewData["Message"] is string message)
+{
+    <p class="alert alert-info">@message</p>
+}
+else
+{
+    <dl class="row">
+        <dt class="col-sm-4">Thesis title</dt>
+        <dd class="col-sm-8">
+            @(Model.ThesisTitle ?? "Not recorded")
+        </dd>
+
+        <dt class="col-sm-4">
+            Original expected submission date
+        </dt>
+        <dd class="col-sm-8">
+            @(Model.OriginalExpectedSubmissionDate?
+                .ToString("dd MMMM yyyy")
+                ?? "Not recorded")
+        </dd>
+
+        <dt class="col-sm-4">
+            Expected submission date
+        </dt>
+        <dd class="col-sm-8">
+            @(Model.ExpectedSubmissionDate?
+                .ToString("dd MMMM yyyy")
+                ?? "Not recorded")
+        </dd>
+
+        <dt class="col-sm-4">
+            Actual submission date
+        </dt>
+        <dd class="col-sm-8">
+            @(Model.ActualSubmissionDate?
+                .ToString("dd MMMM yyyy")
+                ?? "Not recorded")
+        </dd>
+
+        <dt class="col-sm-4">Current status</dt>
+        <dd class="col-sm-8">@Model.Status</dd>
+    </dl>
+}
+
+<a asp-action="Index">Return to students</a>

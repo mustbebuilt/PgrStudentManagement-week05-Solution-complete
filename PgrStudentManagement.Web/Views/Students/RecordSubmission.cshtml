@@ -1,0 +1,47 @@
+@model PgrStudentManagement.Web.Modules.Students.Models.Student
+
+@{
+    ViewData["Title"] =
+        "Record Actual Thesis Submission";
+}
+
+<h1>Record Actual Thesis Submission</h1>
+
+<p>
+    <strong>@Model.StudentNumber:</strong>
+    @Model.FullName
+</p>
+
+<form asp-action="RecordSubmission"
+      method="post">
+    <input type="hidden"
+           name="studentNumber"
+           value="@Model.StudentNumber" />
+
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger"></div>
+
+    <div class="mb-3">
+        <label for="actualSubmissionDate"
+               class="form-label">
+            Actual submission date
+        </label>
+
+        <input id="actualSubmissionDate"
+               name="actualSubmissionDate"
+               type="date"
+               value="@Model.ActualSubmissionDate?.ToString("yyyy-MM-dd")"
+               class="form-control" />
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Record submission
+    </button>
+
+    <a asp-action="ThesisDetails"
+       asp-route-studentNumber="@Model.StudentNumber"
+       class="btn btn-secondary">
+        Cancel
+    </a>
+</form>

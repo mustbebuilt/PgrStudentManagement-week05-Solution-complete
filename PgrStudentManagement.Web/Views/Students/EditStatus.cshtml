@@ -1,0 +1,41 @@
+@model PgrStudentManagement.Web.Modules.Students.Models.Student
+
+@{
+    ViewData["Title"] = "Update Student Status";
+}
+
+<h1>Update Student Status</h1>
+
+<p>
+    <strong>@Model.StudentNumber:</strong>
+    @Model.FullName
+</p>
+
+<form asp-action="EditStatus" method="post">
+    <input type="hidden"
+           name="studentNumber"
+           value="@Model.StudentNumber" />
+
+    <div class="mb-3">
+        <label for="status"
+               class="form-label">
+            Status
+        </label>
+
+        <select id="status"
+                name="status"
+                asp-items="Html.GetEnumSelectList<Status>()"
+                class="form-select"></select>
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary">
+        Save
+    </button>
+
+    <a asp-action="Details"
+       asp-route-studentNumber="@Model.StudentNumber"
+       class="btn btn-secondary">
+        Cancel
+    </a>
+</form>

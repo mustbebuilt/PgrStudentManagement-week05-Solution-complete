@@ -1,0 +1,201 @@
+@model PgrStudentManagement.Web.Modules.AcademicSupervisors.Models.AssignmentFormResult
+
+@using PgrStudentManagement.Web.Modules.AcademicSupervisors.Models
+
+@{
+    ViewData["Title"] =
+        "Assign Academic Supervisor";
+}
+
+<h1>Assign Academic Supervisor</h1>
+
+@if (Model.Student is null)
+{
+    <div class="alert alert-warning">
+        Student not found
+    </div>
+
+    <a asp-controller="Student"
+       asp-action="Index"
+       class="btn btn-secondary">
+        Return to Students
+    </a>
+}
+else
+{
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="h5 card-title">
+                Selected student
+            </h2>
+
+            <dl class="row mb-0">
+                <dt class="col-sm-4">
+                    Student number
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Student.StudentNumber
+                </dd>
+
+                <dt class="col-sm-4">
+                    Name
+                </dt>
+                <dd class="col-sm-8">
+                    @Model.Student.DisplayName
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    @if (Model.Supervisors.Count == 0)
+    {
+        <div class="alert alert-info">
+            No academic supervisors found
+        </div>
+
+        <a asp-action="Create"
+           class="btn btn-primary">
+            Create Academic Supervisor
+        </a>
+    }
+    else
+    {
+        <form asp-action="Assign"
+              method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="alert alert-danger"
+                 role="alert"></div>
+
+            <input type="hidden"
+                   name="StudentNumber"
+                   value="@Model.Student.StudentNumber" />
+
+            <div class="mb-3">
+                <label for="StaffNumber"
+                       class="form-label">
+                    Academic Supervisor
+                </label>
+
+                <select id="StaffNumber"
+                        name="StaffNumber"
+                        class="form-select">
+                    <option value="">
+                        Select an Academic Supervisor
+                    </option>
+
+                    @foreach (var supervisor in Model.Supervisors)
+                    {
+                        var selectedStaffNumber = 
+                            ViewData["SelectedStaffNumber"] as string;
+                        
+                        if (supervisor.StaffNumber == selectedStaffNumber )
+                        {                
+                        <option value="@supervisor.StaffNumber" selected>
+                            @supervisor.FirstName
+                            @supervisor.LastName
+                            (@supervisor.StaffNumber)
+                        </option>
+                        }
+                        else
+                        {
+                           <option value="@supervisor.StaffNumber">
+                            @supervisor.FirstName
+                            @supervisor.LastName
+                            (@supervisor.StaffNumber)
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="Role"
+                       class="form-label">
+                    Supervisory role
+                </label>
+
+                <select id="Role"
+                        name="Role"
+                        class="form-select">
+                    <option value="">
+                        Select a role
+                    </option>
+
+                    @foreach (var role in Model.AvailableRoles)
+                    {
+                        var selectedRole =
+                            ViewData["SelectedRole"];
+
+                        if (selectedRole?.ToString() ==
+                            role.ToString())
+                        {
+                            <option value="@role" selected>
+                                @role
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="@role">
+                                @role
+                            </option>
+                        }
+                    }
+
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="StartDate"
+                       class="form-label">
+                    Start date
+                </label>
+
+                @{
+                    var selectedStartDate =
+                        ViewData["SelectedStartDate"] as string
+                        ?? DateTime.Today.ToString("yyyy-MM-dd");
+
+                }
+                <input id="StartDate"
+                       name="StartDate"
+                       type="date"
+                       class="form-control"
+                       value=
+                           "@DateTime.Today.ToString("yyyy-MM-dd")" />
+            </div>
+
+            <div class="form-check mb-4">
+                @{
+                var exceptionAuthorised =
+                    ViewData["ExceptionAuthorised"] as bool?
+                    ?? false;
+                }
+
+                <input id="ExceptionAuthorised"
+                       name="ExceptionAuthorised"
+                       type="checkbox"
+                       value="true"
+                       class="form-check-input" />
+
+                <label for="ExceptionAuthorised"
+                       class="form-check-label">
+                    Required supervisor-limit exception
+                    has been authorised
+                </label>
+            </div>
+
+            <button type="submit"
+                    class="btn btn-primary">
+                Assign Supervisor
+            </button>
+
+            <a asp-action="Team"
+               asp-route-studentNumber=
+                   "@Model.Student.StudentNumber"
+               class="btn btn-secondary">
+                Cancel
+            </a>
+        </form>
+    }
+}

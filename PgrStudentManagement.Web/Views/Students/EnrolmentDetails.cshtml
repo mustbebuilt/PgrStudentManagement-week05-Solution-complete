@@ -1,0 +1,36 @@
+@model PgrStudentManagement.Web.Modules.Students.Models.Student
+
+@{
+    ViewData["Title"] = "Enrolment Details";
+}
+
+<h1>Enrolment Details</h1>
+
+<dl class="row">
+    <dt class="col-sm-4">Student number</dt>
+    <dd class="col-sm-8">@Model.StudentNumber</dd>
+
+    <dt class="col-sm-4">Name</dt>
+    <dd class="col-sm-8">@Model.FullName</dd>
+
+    <dt class="col-sm-4">Course</dt>
+    <dd class="col-sm-8">
+        @(Model.Course ?? "Not recorded")
+    </dd>
+
+    <dt class="col-sm-4">Mode of study</dt>
+    <dd class="col-sm-8">
+        @(Model.ModeOfStudy ?? "Not recorded")
+    </dd>
+
+    <dt class="col-sm-4">Start date</dt>
+    <dd class="col-sm-8">
+        @(Model.StartDate?.ToString("dd MMMM yyyy")
+            ?? "Not recorded")
+    </dd>
+
+    <dt class="col-sm-4">Current status</dt>
+    <dd class="col-sm-8">@Model.Status</dd>
+</dl>
+
+<a asp-action="Index">Return to students</a>

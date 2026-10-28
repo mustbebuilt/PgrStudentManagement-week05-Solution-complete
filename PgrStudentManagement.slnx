@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="PgrStudentManagement.Tests/PgrStudentManagement.Tests.csproj" />
+  <Project Path="PgrStudentManagement.Web/PgrStudentManagement.Web.csproj" />
+</Solution>

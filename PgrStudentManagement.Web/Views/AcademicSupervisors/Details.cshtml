@@ -1,0 +1,81 @@
+@model PgrStudentManagement.Web.Modules.AcademicSupervisors.Models.AcademicSupervisor
+
+@{
+    ViewData["Title"] = "Academic Supervisor Details";
+}
+
+<h1>Academic Supervisor Details</h1>
+
+@if (TempData["SuccessMessage"] is string successMessage)
+{
+    <div class="alert alert-success">
+        @successMessage
+    </div>
+}
+
+<dl class="row">
+    <dt class="col-sm-4">Staff number</dt>
+    <dd class="col-sm-8">@Model.StaffNumber</dd>
+
+    <dt class="col-sm-4">Name</dt>
+    <dd class="col-sm-8">@Model.FirstName @Model.LastName</dd>
+
+    <dt class="col-sm-4">Email address</dt>
+    <dd class="col-sm-8">
+        @if (string.IsNullOrWhiteSpace(Model.EmailAddress))
+        {
+            <span class="text-muted">
+                Not recorded
+            </span>
+        }
+        else
+        {
+            <a href="mailto:@Model.EmailAddress">
+                @Model.EmailAddress
+            </a>
+        }
+    </dd>
+
+    <dt class="col-sm-4">
+        Employment type
+    </dt>
+    <dd class="col-sm-8">
+        @Model.EmploymentType
+    </dd>
+
+    <dt class="col-sm-4">
+        Training completed
+    </dt>
+    <dd class="col-sm-8">
+        @(Model.TrainingCompleted ? "Yes" : "No")
+    </dd>
+
+    <dt class="col-sm-4">
+        Eligible roles
+    </dt>
+    <dd class="col-sm-8">
+        @if (Model.EligibleRoles.Count == 0)
+        {
+            <span class="text-muted">
+                No eligible roles recorded
+            </span>
+        }
+        else
+        {
+            <ul class="mb-0">
+                @foreach (var role in
+                    Model.EligibleRoles.OrderBy(role => role))
+                {
+                    <li>@role</li>
+                }
+            </ul>
+        }
+    </dd>
+</dl>
+
+<div class="mt-4">
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Return to Academic Supervisors
+    </a>
+</div>
